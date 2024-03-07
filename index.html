@@ -1,13 +1,64 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="./src/style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <title>Calculator</title>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <div>
+    <div class="calculator__container">
+      <div class="calculator__display">
+        <p class="calculator__displayContent">12345</p>
+      </div>
+      <div class="calculator__buttonContainer">
+          <div class="calculator__button top">
+            <button>C</button></div>
+          <div class="calculator__button top">
+            <button>+/=</button></div>
+          <div class="calculator__button top">
+            <button>%</button></div>
+          <div class="calculator__button right">
+            <button>/</button></div>
+          <div class="calculator__button grey">
+            <button>7</button></div>
+          <div class="calculator__button grey">
+            <button>8</button></div>
+          <div class="calculator__button grey">
+            <button>9</button></div>
+          <div class="calculator__button right">
+            <button>X</button></div>
+          <div class="calculator__button grey">
+            <button>4</button></div>
+          <div class="calculator__button grey">
+            <button>5</button></div>
+          <div class="calculator__button grey">
+            <button>6</button></div>
+          <div class="calculator__button right">
+            <button>-</button></div>
+          <div class="calculator__button grey">
+            <button>1</button></div>
+          <div class="calculator__button grey">
+            <button>2</button></div>
+          <div class="calculator__button grey">
+            <button>3</button></div>
+          <div class="calculator__button right">
+            <button>+</button></div>
+        </div>
+        <div class="calculator__bottomRowButtonContainer">
+          <div class="calculator__button grey" id="zeroButton">
+            <button>0</button></div>
+          <div class="calculator__button grey">
+            <button>.</button></div>
+          <div class="calculator__button right">
+            <button>=</button></div>
+        </div>
+        </div>
+      </div>
+      <div id="app"></div>
+      <script type="module" src="/src/main.ts"></script>
+    </div>
   </body>
 </html>
