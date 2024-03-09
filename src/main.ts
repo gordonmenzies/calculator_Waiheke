@@ -55,46 +55,60 @@ if (!display) {
   throw new Error("display is null");
 }
 
-console.log(numbers);
-console.log(operators);
-
-const acceptButton = () => {
-  console.log("button press");
-};
-
-console.log(display.textContent);
-
+// functionality for plus minus button
 const plusMinus = (): void => {
   let displayNumber: number = 0;
+
+  // Catch possible Null Values
   if (!display.textContent) {
     display.textContent = "-";
   } else {
     displayNumber = parseFloat(display.textContent);
   }
 
+  // primary functionality
   if (displayNumber > 0) {
     displayNumber = 0 - displayNumber;
   } else {
-    console.log("display number");
     displayNumber = Math.abs(displayNumber);
   }
-  console.log("clicked");
   console.log(displayNumber);
   display.textContent = String(displayNumber);
 };
 
-numbers[0].addEventListener("click", acceptButton);
+console.log(numbers);
+console.log(operators);
 
-operators[1].addEventListener("click", plusMinus);
+const acceptButton = (event: Event) => {
+  if (!event.target) {
+    throw new Error("button has no value");
+  }
+  console.log(event.target.textContent);
+  display.textContent += String(event.target.textContent);
+};
+
+//
+// Write a function that takes in the value of the node that calls it
+//
+
+numbers.forEach((button) => {
+  button.addEventListener("click", acceptButton);
+});
+
+//numbers[0].addEventListener("click", acceptButton);
+
+//operators[1].addEventListener("click", plusMinus);
 
 // PSEUDO CODE FUNCTIONALITY
 // BUTTON PRESS +/-
 // BUTTON PRESS DECIMAL
 // BUTTON PRESS FIRSTNUMBERSET DISPLAY
+
 // BUTTON PRESS STORE OPERATOR STORE FIRST NUMBER
 // BUTTON PRESS OPERATOR CHANGE OPERATOR TO NEW OPERATOR
 // BUTTON PRESS SECONDNUMBERSET DISPLAY
 // BUTTON PRESS CANCEL
+
 // BUTTON PRESS +/-
 // BUTTON PRESS PERCENTAGE (/10)
 // BUTTON PRESS EQUALS GET RESULT
