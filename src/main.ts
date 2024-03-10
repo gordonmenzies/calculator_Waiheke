@@ -1,73 +1,42 @@
 import "./style.scss";
 
-// const cancel = document.querySelector("#cancel");
-// //const ______
-// const percentage = document.querySelector<HTMLDivElement>("#percentage");
-// const divide = document.querySelector<HTMLDivElement>("#divide");
-// const seven = document.querySelector<HTMLDivElement>("#seven");
-// const eight = document.querySelector<HTMLDivElement>("#eight");
-// const nine = document.querySelector<HTMLDivElement>("#nine");
-// const multiply = document.querySelector<HTMLDivElement>("#multiply");
-// const four = document.querySelector<HTMLDivElement>("#four");
-// const five = document.querySelector<HTMLDivElement>("#five");
-// const six = document.querySelector<HTMLDivElement>("#six");
-// const minus = document.querySelector<HTMLDivElement>("#minus");
-// const one = document.querySelector<HTMLDivElement>("#one");
-// const two = document.querySelector<HTMLDivElement>("#two");
-// const three = document.querySelector<HTMLDivElement>("#three");
-// const plus = document.querySelector<HTMLDivElement>("#plus");
-// const zeroButton = document.querySelector<HTMLDivElement>("#zeroButton");
-// const decimal = document.querySelector<HTMLDivElement>("#decimal");
-// const equal = document.querySelector<HTMLDivElement>("#equal");
-
-// if (
-//   //   !cancel ||
-//   //   !percentage ||
-//   //   !divide ||
-//   //   !seven ||
-//   //   !eight ||
-//   //   !nine ||
-//   //   !multiply ||
-//   //   !four ||
-//   //   !five ||
-//   //   !six ||
-//   //   !minus ||
-//   //   !one ||
-//   //   !two ||
-//   //   !three ||
-//   //   !plus ||
-//   //   !zeroButton ||
-//   //   !decimal ||
-//   //   !equal
-//   // ) {
-//   //   throw new Error("item was null");
-//   // }
+/*
+ BUTTON AND DISPLAY SELECTORS
+ */
 
 const display = document.querySelector<HTMLParagraphElement>(
   ".calculator__displayContent"
 );
-
 const numbers = document.querySelectorAll<HTMLDivElement>(".number");
-
 const operators = document.querySelectorAll<HTMLDivElement>(".operator");
 
+/*
+  NULL CHECK DISPLAY VALIDATOR
+*/
 if (!display) {
   throw new Error("display is null");
 }
 
-// functionality for plus minus button
+/*
+  GLOBAL VALUES
+*/
+
+let firstNumberSet: number = 0;
+let mathmaticalOperatorsApplyEquals: boolean = false;
+let storedOperator = "";
+
+/*
+  OPERATOR FUNCTIONS
+*/
 const plusMinus = (): void => {
   let displayNumber: number = 0;
 
   // Catch possible Null Values
   if (!display.textContent) {
     display.textContent = "-";
-  } else {
-    displayNumber = parseFloat(display.textContent);
   }
-
   // primary functionality
-  if (displayNumber > 0) {
+  else if (displayNumber > 0) {
     displayNumber = 0 - displayNumber;
   } else {
     displayNumber = Math.abs(displayNumber);
@@ -76,9 +45,56 @@ const plusMinus = (): void => {
   display.textContent = String(displayNumber);
 };
 
+const plus = (): void => {
+  // store firstNumberSet
+  // reset display to empty
+  // activate equals
+  firstNumberSet = Number(display.textContent);
+  display.textContent = "";
+  mathmaticalOperatorsApplyEquals = true;
+  storedOperator = "+";
+
+  console.log("firstNumberSet " + firstNumberSet);
+  console.log(
+    "mathmatialOperatorsApplyEquals " + mathmaticalOperatorsApplyEquals
+  );
+};
+
+const equals = (): void => {
+  let secondNumberset = Number(display.textContent);
+  switch (storedOperator) {
+    case "/":
+      // button.addEventListener("click", acceptButton);
+      break;
+    case "X":
+      // button.addEventListener("click", acceptButton);
+      break;
+    case "-":
+      // button.addEventListener("click", acceptButton);
+      break;
+    case "+":
+      display.textContent = String(firstNumberSet + secondNumberset);
+      break;
+    case "C":
+      // button.addEventListener("click", acceptButton);
+      break;
+    case "+/-":
+      // button.addEventListener("click", plusMinus);
+      break;
+    case "%":
+      // button.addEventListener("click", acceptButton);
+      break;
+    case "=":
+      // button.addEventListener("click", equals);
+      break;
+  }
+};
+
 console.log(numbers);
 console.log(operators);
 
+// function is called when a number is pressed, the function adds
+// the value of the button to the display.
 const acceptButton = (event: Event) => {
   if (!event.target) {
     throw new Error("button has no value");
@@ -87,17 +103,43 @@ const acceptButton = (event: Event) => {
   display.textContent += String(event.target.textContent);
 };
 
-//
-// Write a function that takes in the value of the node that calls it
-//
-
+// apply the accept button functionality to all of the number buttons
 numbers.forEach((button) => {
   button.addEventListener("click", acceptButton);
 });
 
-//numbers[0].addEventListener("click", acceptButton);
+// operators.forEach((button) => {
+//   button.addEventListener("click", acceptButton);
+// });
 
-//operators[1].addEventListener("click", plusMinus);
+operators.forEach((button) => {
+  switch (button.innerHTML) {
+    case "/":
+      button.addEventListener("click", acceptButton);
+      break;
+    case "X":
+      button.addEventListener("click", acceptButton);
+      break;
+    case "-":
+      button.addEventListener("click", acceptButton);
+      break;
+    case "+":
+      button.addEventListener("click", plus);
+      break;
+    case "C":
+      button.addEventListener("click", acceptButton);
+      break;
+    case "+/-":
+      button.addEventListener("click", plusMinus);
+      break;
+    case "%":
+      button.addEventListener("click", acceptButton);
+      break;
+    case "=":
+      button.addEventListener("click", equals);
+      break;
+  }
+});
 
 // PSEUDO CODE FUNCTIONALITY
 // BUTTON PRESS +/-
