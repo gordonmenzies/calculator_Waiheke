@@ -22,7 +22,7 @@ if (!display) {
 */
 
 let firstNumberSet: number = 0;
-let mathmaticalOperatorsApplyEquals: boolean = false;
+let secondNumberSet: number = 0;
 let storedOperator = "";
 
 /*
@@ -45,41 +45,47 @@ const plusMinus = (): void => {
   display.textContent = String(displayNumber);
 };
 
-const plus = (): void => {
-  // store firstNumberSet
-  // reset display to empty
-  // activate equals
-  firstNumberSet = Number(display.textContent);
-  display.textContent = "";
-  mathmaticalOperatorsApplyEquals = true;
-  storedOperator = "+";
+const acceptOperator = (event: Event): void => {
+  if (!event.target) {
+    throw new Error("button has no value");
+  }
+
+  if (storedOperator === "") {
+    firstNumberSet = Number(display.textContent);
+    display.textContent = "";
+  } else {
+    secondNumberSet = Number(display.textContent);
+    equals(storedOperator);
+  }
+
+  storedOperator = event.target.textContent;
 
   console.log("firstNumberSet " + firstNumberSet);
-  console.log(
-    "mathmatialOperatorsApplyEquals " + mathmaticalOperatorsApplyEquals
-  );
+  console.log("secondNumberSet " + secondNumberSet);
+  console.log("stored Operator " + storedOperator);
 };
 
-const equals = (): void => {
+const equals = (passedOperator: string): void => {
   let secondNumberset = Number(display.textContent);
-  switch (storedOperator) {
+  switch (passedOperator) {
     case "/":
-      // button.addEventListener("click", acceptButton);
+      display.textContent = String(firstNumberSet / secondNumberset);
+      firstNumberSet = Number(display.textContent);
       break;
     case "X":
-      // button.addEventListener("click", acceptButton);
+      display.textContent = String(firstNumberSet * secondNumberset);
+      firstNumberSet = Number(display.textContent);
       break;
     case "-":
-      // button.addEventListener("click", acceptButton);
+      display.textContent = String(firstNumberSet - secondNumberset);
+      firstNumberSet = Number(display.textContent);
       break;
     case "+":
       display.textContent = String(firstNumberSet + secondNumberset);
+      firstNumberSet = Number(display.textContent);
       break;
     case "C":
       // button.addEventListener("click", acceptButton);
-      break;
-    case "+/-":
-      // button.addEventListener("click", plusMinus);
       break;
     case "%":
       // button.addEventListener("click", acceptButton);
@@ -95,17 +101,26 @@ console.log(operators);
 
 // function is called when a number is pressed, the function adds
 // the value of the button to the display.
-const acceptButton = (event: Event) => {
+const acceptNumber = (event: Event) => {
   if (!event.target) {
     throw new Error("button has no value");
   }
-  console.log(event.target.textContent);
-  display.textContent += String(event.target.textContent);
+
+  /*
+    Current error when more than two mathmatical operators take place
+  */
+
+  if (display.textContent === "") {
+    console.log(event.target.textContent);
+    display.textContent += String(event.target.textContent);
+  } else {
+    display.textContent = String(event.target.textContent);
+  }
 };
 
 // apply the accept button functionality to all of the number buttons
 numbers.forEach((button) => {
-  button.addEventListener("click", acceptButton);
+  button.addEventListener("click", acceptNumber);
 });
 
 // operators.forEach((button) => {
@@ -115,25 +130,25 @@ numbers.forEach((button) => {
 operators.forEach((button) => {
   switch (button.innerHTML) {
     case "/":
-      button.addEventListener("click", acceptButton);
+      button.addEventListener("click", acceptOperator);
       break;
     case "X":
-      button.addEventListener("click", acceptButton);
+      button.addEventListener("click", acceptOperator);
       break;
     case "-":
-      button.addEventListener("click", acceptButton);
+      button.addEventListener("click", acceptOperator);
       break;
     case "+":
-      button.addEventListener("click", plus);
+      button.addEventListener("click", acceptOperator);
       break;
     case "C":
-      button.addEventListener("click", acceptButton);
+      // button.addEventListener("click", acceptButton);
       break;
     case "+/-":
       button.addEventListener("click", plusMinus);
       break;
     case "%":
-      button.addEventListener("click", acceptButton);
+      // button.addEventListener("click", acceptButton);
       break;
     case "=":
       button.addEventListener("click", equals);
