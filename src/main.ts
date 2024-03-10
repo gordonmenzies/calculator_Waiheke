@@ -30,20 +30,41 @@ let showingCalculation: boolean = false;
   OPERATOR FUNCTIONS
 */
 const plusMinus = (): void => {
-  let displayNumber: number = 0;
-
-  // Catch possible Null Values
   if (!display.textContent) {
-    display.textContent = "-";
+    throw new Error("display is empty");
   }
-  // primary functionality
-  else if (displayNumber > 0) {
-    displayNumber = 0 - displayNumber;
+
+  let displayContent: number = Number(display.textContent);
+  // Catch possible Null Values
+  if (display.textContent === "0") {
+    display.textContent = "-0";
+    console.log(display.textContent);
+  } else if (displayContent > 0) {
+    displayContent = 0 - displayContent;
+    display.textContent = String(displayContent);
+  } else if (displayContent < 0) {
+    displayContent = Math.abs(displayContent);
+    display.textContent = String(displayContent);
   } else {
-    displayNumber = Math.abs(displayNumber);
+    display.textContent = "0";
   }
-  console.log(displayNumber);
-  display.textContent = String(displayNumber);
+};
+
+const clear = (): void => {
+  if (!display.textContent) {
+    throw new Error("display is empty");
+  }
+
+  display.textContent = "";
+};
+
+const percentage = (): void => {
+  let displayNumber = Number(display.textContent);
+  display.textContent = String(displayNumber / 10);
+};
+
+const decimal = (): void => {
+  display.textContent += ".";
 };
 
 const acceptOperator = (event: Event): void => {
@@ -107,9 +128,6 @@ const equals = (passedOperator: string): void => {
   console.log("showingCalculation");
 };
 
-console.log(numbers);
-console.log(operators);
-
 /* function that ajudicates what should be 
    displayed on screen when a button is pressed
  */
@@ -117,26 +135,22 @@ const acceptNumber = (event: Event) => {
   if (!event.target) {
     throw new Error("button has no value");
   }
-
-  /*
-  
-  */
   if (showingCalculation === true) {
     display.textContent = String(event.target.textContent);
     showingCalculation = false;
+  } else if (display.textContent === "0") {
+    display.textContent = String(event.target.textContent);
   } else {
     display.textContent += String(event.target.textContent);
   }
 };
 
-// apply the accept button functionality to all of the number buttons
+/*
+  NUMBER EVENT LISTENERS
+*/
 numbers.forEach((button) => {
   button.addEventListener("click", acceptNumber);
 });
-
-// operators.forEach((button) => {
-//   button.addEventListener("click", acceptButton);
-// });
 
 operators.forEach((button) => {
   switch (button.innerHTML) {
@@ -153,16 +167,19 @@ operators.forEach((button) => {
       button.addEventListener("click", acceptOperator);
       break;
     case "C":
-      // button.addEventListener("click", acceptButton);
+      button.addEventListener("click", clear);
       break;
     case "+/-":
       button.addEventListener("click", plusMinus);
       break;
     case "%":
-      // button.addEventListener("click", acceptButton);
+      button.addEventListener("click", percentage);
       break;
     case "=":
       // button.addEventListener("click", equals);
+      break;
+    case ".":
+      button.addEventListener("click", decimal);
       break;
   }
 });
