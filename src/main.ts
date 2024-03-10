@@ -23,7 +23,8 @@ if (!display) {
 
 let firstNumberSet: number = 0;
 let secondNumberSet: number = 0;
-let storedOperator = "";
+let storedOperator: string = "";
+let showingCalculation: boolean = false;
 
 /*
   OPERATOR FUNCTIONS
@@ -71,18 +72,26 @@ const equals = (passedOperator: string): void => {
     case "/":
       display.textContent = String(firstNumberSet / secondNumberset);
       firstNumberSet = Number(display.textContent);
+      storedOperator = "";
+      secondNumberSet = 0;
       break;
     case "X":
       display.textContent = String(firstNumberSet * secondNumberset);
       firstNumberSet = Number(display.textContent);
+      secondNumberSet = 0;
+      storedOperator = "";
       break;
     case "-":
       display.textContent = String(firstNumberSet - secondNumberset);
       firstNumberSet = Number(display.textContent);
+      storedOperator = "";
+      secondNumberSet = 0;
       break;
     case "+":
       display.textContent = String(firstNumberSet + secondNumberset);
       firstNumberSet = Number(display.textContent);
+      storedOperator = "";
+      secondNumberSet = 0;
       break;
     case "C":
       // button.addEventListener("click", acceptButton);
@@ -94,27 +103,29 @@ const equals = (passedOperator: string): void => {
       // button.addEventListener("click", equals);
       break;
   }
+  showingCalculation = true;
+  console.log("showingCalculation");
 };
 
 console.log(numbers);
 console.log(operators);
 
-// function is called when a number is pressed, the function adds
-// the value of the button to the display.
+/* function that ajudicates what should be 
+   displayed on screen when a button is pressed
+ */
 const acceptNumber = (event: Event) => {
   if (!event.target) {
     throw new Error("button has no value");
   }
 
   /*
-    Current error when more than two mathmatical operators take place
+  
   */
-
-  if (display.textContent === "") {
-    console.log(event.target.textContent);
-    display.textContent += String(event.target.textContent);
-  } else {
+  if (showingCalculation === true) {
     display.textContent = String(event.target.textContent);
+    showingCalculation = false;
+  } else {
+    display.textContent += String(event.target.textContent);
   }
 };
 
@@ -151,7 +162,7 @@ operators.forEach((button) => {
       // button.addEventListener("click", acceptButton);
       break;
     case "=":
-      button.addEventListener("click", equals);
+      // button.addEventListener("click", equals);
       break;
   }
 });
