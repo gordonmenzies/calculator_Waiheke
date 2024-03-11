@@ -30,14 +30,10 @@ let showingCalculation: boolean = false;
   OPERATOR FUNCTIONS
 */
 const plusMinus = (): void => {
-  if (!display.textContent) {
-    throw new Error("display is empty");
-  }
-
   let displayContent: number = Number(display.textContent);
   // Catch possible Null Values
   if (display.textContent === "0") {
-    display.textContent = "-0";
+    display.textContent = "-";
     console.log(display.textContent);
   } else if (displayContent > 0) {
     displayContent = 0 - displayContent;
@@ -51,12 +47,13 @@ const plusMinus = (): void => {
 };
 
 const clear = (): void => {
-  if (!display.textContent) {
-    throw new Error("display is empty");
-  }
-
   display.textContent = "";
   firstNumberSet = 0;
+  storedOperator = "";
+  console.log("firstNumberSet " + firstNumberSet);
+  console.log("secondNumberSet " + secondNumberSet);
+  console.log("stored operator " + storedOperator);
+  console.log("display " + display.textContent);
 };
 
 const percentage = (): void => {
@@ -91,29 +88,46 @@ const acceptOperator = (event: Event): void => {
 const equals = (passedOperator: string): void => {
   let secondNumberset = Number(display.textContent);
   switch (passedOperator) {
-    case "/":
+    case "÷":
       display.textContent = String(firstNumberSet / secondNumberset);
       firstNumberSet = Number(display.textContent);
       storedOperator = "";
       secondNumberSet = 0;
+      console.log("firstNumberSet " + firstNumberSet);
+      console.log("secondNumberSet " + secondNumberSet);
+      console.log("stored operator " + storedOperator);
+      console.log("display " + display.textContent);
       break;
-    case "X":
+    case "x":
       display.textContent = String(firstNumberSet * secondNumberset);
       firstNumberSet = Number(display.textContent);
       secondNumberSet = 0;
       storedOperator = "";
+      console.log("firstNumberSet " + firstNumberSet);
+      console.log("secondNumberSet " + secondNumberSet);
+      console.log("stored operator " + storedOperator);
+      console.log("display " + display.textContent);
       break;
     case "-":
       display.textContent = String(firstNumberSet - secondNumberset);
       firstNumberSet = Number(display.textContent);
       storedOperator = "";
       secondNumberSet = 0;
+      console.log("firstNumberSet " + firstNumberSet);
+      console.log("secondNumberSet " + secondNumberSet);
+      console.log("stored operator " + storedOperator);
+      console.log("display " + display.textContent);
       break;
     case "+":
+      console.log("reached");
       display.textContent = String(firstNumberSet + secondNumberset);
       firstNumberSet = Number(display.textContent);
       storedOperator = "";
       secondNumberSet = 0;
+      console.log("firstNumberSet " + firstNumberSet);
+      console.log("secondNumberSet " + secondNumberSet);
+      console.log("stored operator " + storedOperator);
+      console.log("display " + display.textContent);
       break;
     case "=":
       switch (storedOperator) {
@@ -123,7 +137,7 @@ const equals = (passedOperator: string): void => {
           storedOperator = "";
           secondNumberSet = 0;
           break;
-        case "X":
+        case "x":
           display.textContent = String(firstNumberSet * secondNumberset);
           firstNumberSet = Number(display.textContent);
           secondNumberSet = 0;
@@ -163,6 +177,11 @@ const acceptNumber = (event: Event) => {
   } else {
     display.textContent += String(event.target.textContent);
   }
+
+  console.log("firstNumberSet " + firstNumberSet);
+  console.log("secondNumberSet " + secondNumberSet);
+  console.log("stored operator " + storedOperator);
+  console.log("display " + display.textContent);
 };
 
 /*
@@ -174,10 +193,10 @@ numbers.forEach((button) => {
 
 operators.forEach((button) => {
   switch (button.innerHTML) {
-    case "/":
+    case "÷":
       button.addEventListener("click", acceptOperator);
       break;
-    case "X":
+    case "x":
       button.addEventListener("click", acceptOperator);
       break;
     case "-":
@@ -203,17 +222,3 @@ operators.forEach((button) => {
       break;
   }
 });
-
-// PSEUDO CODE FUNCTIONALITY
-// BUTTON PRESS +/-
-// BUTTON PRESS DECIMAL
-// BUTTON PRESS FIRSTNUMBERSET DISPLAY
-
-// BUTTON PRESS STORE OPERATOR STORE FIRST NUMBER
-// BUTTON PRESS OPERATOR CHANGE OPERATOR TO NEW OPERATOR
-// BUTTON PRESS SECONDNUMBERSET DISPLAY
-// BUTTON PRESS CANCEL
-
-// BUTTON PRESS +/-
-// BUTTON PRESS PERCENTAGE (/10)
-// BUTTON PRESS EQUALS GET RESULT

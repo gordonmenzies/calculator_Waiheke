@@ -45,10 +45,6 @@
   color: white;
   cursor: default;
 }
-.calculator__container .calculator__buttonContainer .calculator__button button {
-  margin-left: 23px;
-  margin-top: 20px;
-}
 .calculator__container .calculator__bottomRowButtonContainer {
   display: grid;
   grid-template-columns: 50% 25% 25%;
@@ -74,18 +70,10 @@
   color: white;
   cursor: default;
 }
-.calculator__container .calculator__bottomRowButtonContainer .calculator__button button {
-  margin-left: 23px;
-  margin-top: 20px;
-}
 .calculator__container .calculator__bottomRowButtonContainer #zeroButton {
   width: 110px;
   text-align: center;
   border-radius: 40px;
-}
-.calculator__container .calculator__bottomRowButtonContainer #zeroButton button {
-  margin-left: 70px;
-  margin-top: 20px;
 }
 .calculator__container .calculator__displayContent {
   margin-top: 30px;
