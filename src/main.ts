@@ -56,6 +56,7 @@ const clear = (): void => {
   }
 
   display.textContent = "";
+  firstNumberSet = 0;
 };
 
 const percentage = (): void => {
@@ -114,14 +115,33 @@ const equals = (passedOperator: string): void => {
       storedOperator = "";
       secondNumberSet = 0;
       break;
-    case "C":
-      // button.addEventListener("click", acceptButton);
-      break;
-    case "%":
-      // button.addEventListener("click", acceptButton);
-      break;
     case "=":
-      // button.addEventListener("click", equals);
+      switch (storedOperator) {
+        case "/":
+          display.textContent = String(firstNumberSet / secondNumberset);
+          firstNumberSet = Number(display.textContent);
+          storedOperator = "";
+          secondNumberSet = 0;
+          break;
+        case "X":
+          display.textContent = String(firstNumberSet * secondNumberset);
+          firstNumberSet = Number(display.textContent);
+          secondNumberSet = 0;
+          storedOperator = "";
+          break;
+        case "-":
+          display.textContent = String(firstNumberSet - secondNumberset);
+          firstNumberSet = Number(display.textContent);
+          storedOperator = "";
+          secondNumberSet = 0;
+          break;
+        case "+":
+          display.textContent = String(firstNumberSet + secondNumberset);
+          firstNumberSet = Number(display.textContent);
+          storedOperator = "";
+          secondNumberSet = 0;
+          break;
+      }
       break;
   }
   showingCalculation = true;
@@ -176,7 +196,7 @@ operators.forEach((button) => {
       button.addEventListener("click", percentage);
       break;
     case "=":
-      // button.addEventListener("click", equals);
+      button.addEventListener("click", acceptOperator);
       break;
     case ".":
       button.addEventListener("click", decimal);
