@@ -174,6 +174,8 @@ const acceptNumber = (event: Event) => {
     showingCalculation = false;
   } else if (display.textContent === "0") {
     display.textContent = String(event.target.textContent);
+  } else if (display.textContent.length > 8) {
+    return;
   } else {
     display.textContent += String(event.target.textContent);
   }
