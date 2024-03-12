@@ -25,7 +25,24 @@ let firstNumberSet: number = 0;
 let secondNumberSet: number = 0;
 let storedOperator: string = "";
 let showingCalculation: boolean = false;
-let negative: boolean = true;
+//let negative: boolean = true;
+
+/*
+  function that modifies the displayed value to ensure when the 
+  result of calculations is over a certain length the number is 
+  displayed to the power of 10
+*/
+const lengthOfNumberModifier = (number: string): string => {
+  if (number.length > 8) {
+    const powerOf = number.length - 4 + 1;
+    number = `${number[0]}${number[1]}${number[2]}`;
+    return `${number}e${powerOf}`;
+  } else if (number.length > 11) {
+    return `no. 2 lrg`;
+  } else {
+    return number;
+  }
+};
 
 /*
   OPERATOR FUNCTIONS
@@ -56,7 +73,6 @@ const clear = (): void => {
   display.textContent = "";
   firstNumberSet = 0;
   storedOperator = "";
-  negative = false;
   console.log("firstNumberSet " + firstNumberSet);
   console.log("secondNumberSet " + secondNumberSet);
   console.log("stored operator " + storedOperator);
@@ -68,6 +84,9 @@ const percentage = (): void => {
   display.textContent = String(displayNumber / 10);
 };
 
+/*
+  adds decimal to display
+*/
 const decimal = (): void => {
   if (display.textContent?.includes(".")) {
     return;
@@ -76,7 +95,7 @@ const decimal = (): void => {
   }
 };
 
-/* reads the function of the button and determines the action to be performed 
+/* reads the value of the button and determines the method to be performed 
       set first number set
       set second number set and calculate 
    
@@ -89,23 +108,43 @@ const acceptOperator = (event: Event): void => {
 
   /* determines whether or not an equals operation is due to be performed 
    or not 
-*/
-  if (storedOperator === "") {
+  */
+  if (storedOperator === "" && event.target.textContent !== "-") {
     firstNumberSet = Number(display.textContent);
     display.textContent = "";
     storedOperator = event.target.textContent;
+    console.log("standard operation");
 
-    /* in the instance that a number that a number that 
-    would be given to the secondNumberSet is negative
-  */
-  } else if (storedOperator !== "" && event.target.textContent === "-") {
-    negative = true;
+    /*
+      In the instance that no number has been entered and 
+      first number set is going to be a negative
+    */
+  } else if (showingCalculation === false && event.target.textContent === "-") {
+    display.textContent = "-";
+    console.log("negative first value being inputted ");
 
+    /* in the instance that the first inputted number is a negative
+       and a button has been pressed to make a calculation
+    */
+  } else if (showingCalculation !== false && Number(display.textContent) < 0) {
+    firstNumberSet = Number(display.textContent);
+    display.textContent = "";
+    storedOperator = event.target.textContent;
+    console.log("negative first input reached");
+
+    /* in the instance that the second inputted number is negative
+     */
+  } else if (firstNumberSet !== 0 && event.target.textContent === "-") {
+    display.textContent = "-";
+    console.log("second input negative reached");
     /* in the instance a number has already been entered and the use of the mathmatical operator
     also performs a calculation
-  */
+    */
   } else {
     secondNumberSet = Number(display.textContent);
+    console.log("accept operator else statement reached");
+    console.log("showing calculation =" + showingCalculation);
+    console.log("event.target.textContent =" + event.target.textContent);
     equals(storedOperator);
     storedOperator = event.target.textContent;
   }
@@ -115,12 +154,20 @@ const acceptOperator = (event: Event): void => {
   console.log("stored Operator " + storedOperator);
 };
 
+/* is called either when the firstNumberSet contains a value and an arithmetic operator is 
+   clicked, or when equals is clicked. 
+
+   This function contains the core of the caluclating code.
+*/
+
 const equals = (passedOperator: string): void => {
   let secondNumberset = Number(display.textContent);
   switch (passedOperator) {
     case "÷":
-      display.textContent = String(firstNumberSet / secondNumberset);
-      firstNumberSet = Number(display.textContent);
+      display.textContent = lengthOfNumberModifier(
+        String(firstNumberSet / secondNumberset)
+      );
+      firstNumberSet = firstNumberSet / secondNumberset;
       storedOperator = "";
       secondNumberSet = 0;
       console.log("firstNumberSet " + firstNumberSet);
@@ -129,8 +176,10 @@ const equals = (passedOperator: string): void => {
       console.log("display " + display.textContent);
       break;
     case "x":
-      display.textContent = String(firstNumberSet * secondNumberset);
-      firstNumberSet = Number(display.textContent);
+      display.textContent = lengthOfNumberModifier(
+        String(firstNumberSet * secondNumberset)
+      );
+      firstNumberSet = Number(firstNumberSet * secondNumberset);
       secondNumberSet = 0;
       storedOperator = "";
       console.log("firstNumberSet " + firstNumberSet);
@@ -139,8 +188,10 @@ const equals = (passedOperator: string): void => {
       console.log("display " + display.textContent);
       break;
     case "-":
-      display.textContent = String(firstNumberSet - secondNumberset);
-      firstNumberSet = Number(display.textContent);
+      display.textContent = lengthOfNumberModifier(
+        String(firstNumberSet - secondNumberset)
+      );
+      firstNumberSet = Number(firstNumberSet - secondNumberset);
       storedOperator = "";
       secondNumberSet = 0;
       console.log("firstNumberSet " + firstNumberSet);
@@ -150,8 +201,10 @@ const equals = (passedOperator: string): void => {
       break;
     case "+":
       console.log("reached");
-      display.textContent = String(firstNumberSet + secondNumberset);
-      firstNumberSet = Number(display.textContent);
+      display.textContent = lengthOfNumberModifier(
+        String(firstNumberSet + secondNumberset)
+      );
+      firstNumberSet = Number(firstNumberSet + secondNumberset);
       storedOperator = "";
       secondNumberSet = 0;
       console.log("firstNumberSet " + firstNumberSet);
@@ -162,26 +215,34 @@ const equals = (passedOperator: string): void => {
     case "=":
       switch (storedOperator) {
         case "/":
-          display.textContent = String(firstNumberSet / secondNumberset);
-          firstNumberSet = Number(display.textContent);
+          display.textContent = lengthOfNumberModifier(
+            String(firstNumberSet / secondNumberset)
+          );
+          firstNumberSet = Number(firstNumberSet / secondNumberset);
           storedOperator = "";
           secondNumberSet = 0;
           break;
         case "x":
-          display.textContent = String(firstNumberSet * secondNumberset);
-          firstNumberSet = Number(display.textContent);
+          display.textContent = lengthOfNumberModifier(
+            String(firstNumberSet * secondNumberset)
+          );
+          firstNumberSet = Number(firstNumberSet * secondNumberset);
           secondNumberSet = 0;
           storedOperator = "";
           break;
         case "-":
-          display.textContent = String(firstNumberSet - secondNumberset);
-          firstNumberSet = Number(display.textContent);
+          display.textContent = lengthOfNumberModifier(
+            String(firstNumberSet - secondNumberset)
+          );
+          firstNumberSet = Number(firstNumberSet - secondNumberset);
           storedOperator = "";
           secondNumberSet = 0;
           break;
         case "+":
-          display.textContent = String(firstNumberSet + secondNumberset);
-          firstNumberSet = Number(display.textContent);
+          display.textContent = lengthOfNumberModifier(
+            String(firstNumberSet + secondNumberset)
+          );
+          firstNumberSet = Number(firstNumberSet + secondNumberset);
           storedOperator = "";
           secondNumberSet = 0;
           break;
@@ -214,16 +275,23 @@ const acceptNumber = (event: Event) => {
   } else if (display.textContent === "0") {
     display.textContent = String(event.target.textContent);
 
-    /* if the display is showing a negative number 
-              after calculation 
-              initial input
+    /* if the display should be showing a negative number 
+     on input
   */
-  } else if (negative === true) {
+  } else if (
+    storedOperator === "-" &&
+    firstNumberSet === 0 &&
+    display.textContent === ""
+  ) {
     display.textContent = String(`-${event.target.textContent}`);
-    negative = false;
+
+    /*
+     */
+  } else if (storedOperator === "-" && firstNumberSet === 0) {
+    display.textContent += String(event.target.textContent);
+
     /* if the number is greater than 9 figures, 
-              after calculation 
-              initial input
+     on initial input
   */
   } else if (display.textContent.length > 8) {
     return;
@@ -235,7 +303,6 @@ const acceptNumber = (event: Event) => {
   console.log("secondNumberSet " + secondNumberSet);
   console.log("stored operator " + storedOperator);
   console.log("display " + display.textContent);
-  console.log("justchecking");
 };
 
 /*

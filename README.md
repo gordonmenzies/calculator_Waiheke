@@ -36,5 +36,33 @@ here you can find the DOM accessing elements of the code with access the calcula
 
         percentage, plus/minus, equals and clear are contained within their own functions.
 
+        decimal
+
     NUMBER EVENT LISTENERS
         here you can find the code that listens for and applies the functionality that occurs when the numbers are pressed on the calculator.
+
+
+
+    POTENTIAL ERRORS
+        X stored operator contains "=" when = is pressed when display is empty, to find this error press = when the display is empty.
+
+        X adding a decimal to a TOTHEPOWEROF value
+
+        X using the percentage button when deaing with a TOTHEPOWEROF value
+
+    Potential Fixes
+
+
+
+
+    Fixed Issues
+        multiple decimal places - check decimal code
+
+        consider the different eventualities of having negative
+            - specifically i have created a condition on line 101 where if a stored operator exists
+            and negative is selected then the upcoming number to be inputted becomes negative.
+
+            however the new challenge is that the stored operator can not easily switch from any other operator to negative
+            due to this condition.
+
+        what happens when a number is calculated that is over 9 figures?
