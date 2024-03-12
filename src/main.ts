@@ -102,16 +102,18 @@ const acceptOperator = (event: Event): void => {
   /* determines whether or not an equals operation is due to be performed 
    or not 
   */
-  if (storedOperator === "" && event.target.textContent !== "-") {
+  const button = event.currentTarget as HTMLDivElement;
+
+  if (storedOperator === "" && button.innerHTML !== "-") {
     firstNumberSet = Number(display.textContent);
     display.textContent = "";
-    storedOperator = event.target.textContent;
+    storedOperator = button.innerHTML;
 
     /*
       In the instance that no number has been entered and 
       first number set is going to be a negative
     */
-  } else if (showingCalculation === false && event.target.textContent === "-") {
+  } else if (showingCalculation === false && button.innerHTML === "-") {
     display.textContent = "-";
 
     /* in the instance that the first inputted number is a negative
@@ -120,11 +122,11 @@ const acceptOperator = (event: Event): void => {
   } else if (showingCalculation !== false && Number(display.textContent) < 0) {
     firstNumberSet = Number(display.textContent);
     display.textContent = "";
-    storedOperator = event.target.textContent;
+    storedOperator = button.innerHTML;
 
     /* in the instance that the second inputted number is negative
      */
-  } else if (firstNumberSet !== 0 && event.target.textContent === "-") {
+  } else if (firstNumberSet !== 0 && button.innerHTML === "-") {
     display.textContent = "-";
     /* in the instance a number has already been entered and the use of the mathmatical operator
     also performs a calculation
@@ -132,7 +134,7 @@ const acceptOperator = (event: Event): void => {
   } else {
     secondNumberSet = Number(display.textContent);
     equals(storedOperator);
-    storedOperator = event.target.textContent;
+    storedOperator = button.innerHTML;
   }
 };
 
@@ -143,37 +145,37 @@ const acceptOperator = (event: Event): void => {
 */
 
 const equals = (passedOperator: string): void => {
-  let secondNumberset = Number(display.textContent);
+  secondNumberSet = Number(display.textContent);
   switch (passedOperator) {
     case "÷":
       display.textContent = lengthOfNumberModifier(
-        String(firstNumberSet / secondNumberset)
+        String(firstNumberSet / secondNumberSet)
       );
-      firstNumberSet = firstNumberSet / secondNumberset;
+      firstNumberSet = firstNumberSet / secondNumberSet;
       storedOperator = "";
       secondNumberSet = 0;
       break;
     case "x":
       display.textContent = lengthOfNumberModifier(
-        String(firstNumberSet * secondNumberset)
+        String(firstNumberSet * secondNumberSet)
       );
-      firstNumberSet = Number(firstNumberSet * secondNumberset);
+      firstNumberSet = Number(firstNumberSet * secondNumberSet);
       secondNumberSet = 0;
       storedOperator = "";
       break;
     case "-":
       display.textContent = lengthOfNumberModifier(
-        String(firstNumberSet - secondNumberset)
+        String(firstNumberSet - secondNumberSet)
       );
-      firstNumberSet = Number(firstNumberSet - secondNumberset);
+      firstNumberSet = Number(firstNumberSet - secondNumberSet);
       storedOperator = "";
       secondNumberSet = 0;
       break;
     case "+":
       display.textContent = lengthOfNumberModifier(
-        String(firstNumberSet + secondNumberset)
+        String(firstNumberSet + secondNumberSet)
       );
-      firstNumberSet = Number(firstNumberSet + secondNumberset);
+      firstNumberSet = Number(firstNumberSet + secondNumberSet);
       storedOperator = "";
       secondNumberSet = 0;
       break;
@@ -181,33 +183,33 @@ const equals = (passedOperator: string): void => {
       switch (storedOperator) {
         case "/":
           display.textContent = lengthOfNumberModifier(
-            String(firstNumberSet / secondNumberset)
+            String(firstNumberSet / secondNumberSet)
           );
-          firstNumberSet = Number(firstNumberSet / secondNumberset);
+          firstNumberSet = Number(firstNumberSet / secondNumberSet);
           storedOperator = "";
           secondNumberSet = 0;
           break;
         case "x":
           display.textContent = lengthOfNumberModifier(
-            String(firstNumberSet * secondNumberset)
+            String(firstNumberSet * secondNumberSet)
           );
-          firstNumberSet = Number(firstNumberSet * secondNumberset);
+          firstNumberSet = Number(firstNumberSet * secondNumberSet);
           secondNumberSet = 0;
           storedOperator = "";
           break;
         case "-":
           display.textContent = lengthOfNumberModifier(
-            String(firstNumberSet - secondNumberset)
+            String(firstNumberSet - secondNumberSet)
           );
-          firstNumberSet = Number(firstNumberSet - secondNumberset);
+          firstNumberSet = Number(firstNumberSet - secondNumberSet);
           storedOperator = "";
           secondNumberSet = 0;
           break;
         case "+":
           display.textContent = lengthOfNumberModifier(
-            String(firstNumberSet + secondNumberset)
+            String(firstNumberSet + secondNumberSet)
           );
-          firstNumberSet = Number(firstNumberSet + secondNumberset);
+          firstNumberSet = Number(firstNumberSet + secondNumberSet);
           storedOperator = "";
           secondNumberSet = 0;
           break;
@@ -221,6 +223,8 @@ const equals = (passedOperator: string): void => {
    displayed on screen when a button is pressed
 */
 const acceptNumber = (event: Event) => {
+  const button = event.currentTarget as HTMLDivElement;
+
   if (!event.target) {
     throw new Error("button has no value");
   }
@@ -228,7 +232,7 @@ const acceptNumber = (event: Event) => {
   /* if display is currently showing a calculated value rather than an inputted value or no value
    */
   if (showingCalculation === true) {
-    display.textContent = String(event.target.textContent);
+    display.textContent = String(button.innerHTML);
     showingCalculation = false;
 
     /* if display is showing zero 
@@ -237,7 +241,7 @@ const acceptNumber = (event: Event) => {
       or after use of plus minus when display is empty 
   */
   } else if (display.textContent === "0") {
-    display.textContent = String(event.target.textContent);
+    display.textContent = String(button.innerHTML);
 
     /* if the display should be showing a negative number 
      on input
@@ -247,20 +251,20 @@ const acceptNumber = (event: Event) => {
     firstNumberSet === 0 &&
     display.textContent === ""
   ) {
-    display.textContent = String(`-${event.target.textContent}`);
+    display.textContent = String(`-${button.innerHTML}`);
 
     /*
      */
   } else if (storedOperator === "-" && firstNumberSet === 0) {
-    display.textContent += String(event.target.textContent);
+    display.textContent += String(button.innerHTML);
 
     /* if the number is greater than 9 figures, 
      on initial input
   */
-  } else if (display.textContent.length > 8) {
-    return;
+    // } else if (display.textContent.length > 8) {
+    //   return;
   } else {
-    display.textContent += String(event.target.textContent);
+    display.textContent += String(button.innerHTML);
   }
 };
 
