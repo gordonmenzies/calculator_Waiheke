@@ -53,5 +53,7 @@ The code can be broken up into three sections.
 
         X Display does not show zero when calculated number = 0
 
+        X decimals do not work with operators
+
     Potential Errors
         X stored operator contains "=" when = is pressed when display is empty, to find this error press = when the display is empty.

@@ -33,7 +33,7 @@ let showingCalculation: boolean = false;
   displayed to the power of 10
 */
 const lengthOfNumberModifier = (number: string): string => {
-  if (number.length > 8) {
+  if (number.length > 8 && number) {
     const powerOf = number.length - 4 + 1;
     number = `${number[0]}${number[1]}${number[2]}`;
     return `${number}e${powerOf}`;
@@ -154,6 +154,10 @@ const equals = (passedOperator: string): void => {
       firstNumberSet = firstNumberSet / secondNumberSet;
       storedOperator = "";
       secondNumberSet = 0;
+      console.log("first number " + firstNumberSet);
+      console.log("second number " + secondNumberSet);
+      console.log("stored operator " + storedOperator);
+      console.log("dispaly " + display.textContent);
       break;
     case "x":
       display.textContent = lengthOfNumberModifier(
@@ -162,6 +166,10 @@ const equals = (passedOperator: string): void => {
       firstNumberSet = Number(firstNumberSet * secondNumberSet);
       secondNumberSet = 0;
       storedOperator = "";
+      console.log("first number " + firstNumberSet);
+      console.log("second number " + secondNumberSet);
+      console.log("stored operator " + storedOperator);
+      console.log("dispaly " + display.textContent);
       break;
     case "-":
       display.textContent = lengthOfNumberModifier(
@@ -170,6 +178,10 @@ const equals = (passedOperator: string): void => {
       firstNumberSet = Number(firstNumberSet - secondNumberSet);
       storedOperator = "";
       secondNumberSet = 0;
+      console.log("first number " + firstNumberSet);
+      console.log("second number " + secondNumberSet);
+      console.log("stored operator " + storedOperator);
+      console.log("dispaly " + display.textContent);
       break;
     case "+":
       display.textContent = lengthOfNumberModifier(
@@ -178,6 +190,10 @@ const equals = (passedOperator: string): void => {
       firstNumberSet = Number(firstNumberSet + secondNumberSet);
       storedOperator = "";
       secondNumberSet = 0;
+      console.log("first number " + firstNumberSet);
+      console.log("second number " + secondNumberSet);
+      console.log("stored operator " + storedOperator);
+      console.log("dispaly " + display.textContent);
       break;
     case "=":
       switch (storedOperator) {
@@ -188,6 +204,10 @@ const equals = (passedOperator: string): void => {
           firstNumberSet = Number(firstNumberSet / secondNumberSet);
           storedOperator = "";
           secondNumberSet = 0;
+          console.log("first number " + firstNumberSet);
+          console.log("second number " + secondNumberSet);
+          console.log("stored operator " + storedOperator);
+          console.log("dispaly " + display.textContent);
           break;
         case "x":
           display.textContent = lengthOfNumberModifier(
@@ -196,6 +216,10 @@ const equals = (passedOperator: string): void => {
           firstNumberSet = Number(firstNumberSet * secondNumberSet);
           secondNumberSet = 0;
           storedOperator = "";
+          console.log("first number " + firstNumberSet);
+          console.log("second number " + secondNumberSet);
+          console.log("stored operator " + storedOperator);
+          console.log("dispaly " + display.textContent);
           break;
         case "-":
           display.textContent = lengthOfNumberModifier(
@@ -204,6 +228,10 @@ const equals = (passedOperator: string): void => {
           firstNumberSet = Number(firstNumberSet - secondNumberSet);
           storedOperator = "";
           secondNumberSet = 0;
+          console.log("first number " + firstNumberSet);
+          console.log("second number " + secondNumberSet);
+          console.log("stored operator " + storedOperator);
+          console.log("dispaly " + display.textContent);
           break;
         case "+":
           display.textContent = lengthOfNumberModifier(
@@ -212,6 +240,10 @@ const equals = (passedOperator: string): void => {
           firstNumberSet = Number(firstNumberSet + secondNumberSet);
           storedOperator = "";
           secondNumberSet = 0;
+          console.log("first number " + firstNumberSet);
+          console.log("second number " + secondNumberSet);
+          console.log("stored operator " + storedOperator);
+          console.log("dispaly " + display.textContent);
           break;
       }
       break;
@@ -264,6 +296,11 @@ const acceptNumber = (event: Event) => {
   } else {
     display.textContent += String(button.innerHTML);
   }
+
+  console.log("first number " + firstNumberSet);
+  console.log("second number " + secondNumberSet);
+  console.log("stored operator " + storedOperator);
+  console.log("dispaly " + display.textContent);
 };
 
 /*
