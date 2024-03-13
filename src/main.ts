@@ -261,8 +261,6 @@ const acceptNumber = (event: Event) => {
     /* if the number is greater than 9 figures, 
      on initial input
   */
-    // } else if (display.textContent.length > 8) {
-    //   return;
   } else {
     display.textContent += String(button.innerHTML);
   }
