@@ -43,26 +43,12 @@ here you can find the DOM accessing elements of the code with access the calcula
 
 
 
-    POTENTIAL ERRORS
-        X stored operator contains "=" when = is pressed when display is empty, to find this error press = when the display is empty.
-
+    ERRORS
         X adding a decimal to a TOTHEPOWEROF value
 
         X using the percentage button when deaing with a TOTHEPOWEROF value
 
-    Potential Fixes
+        X Negative numbers d
 
-
-
-
-    Fixed Issues
-        multiple decimal places - check decimal code
-
-        consider the different eventualities of having negative
-            - specifically i have created a condition on line 101 where if a stored operator exists
-            and negative is selected then the upcoming number to be inputted becomes negative.
-
-            however the new challenge is that the stored operator can not easily switch from any other operator to negative
-            due to this condition.
-
-        what happens when a number is calculated that is over 9 figures?
+    Potential Errors
+        X stored operator contains "=" when = is pressed when display is empty, to find this error press = when the display is empty.
